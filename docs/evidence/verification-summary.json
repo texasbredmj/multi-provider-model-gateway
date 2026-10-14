@@ -1,0 +1,308 @@
+{
+  "verified_at": "2026-10-14T06:08:07.112734+00:00",
+  "version": "0.1.0",
+  "windows": {
+    "python": "3.14.6",
+    "installation": "regular wheel in fresh venv",
+    "junit": {
+      "tests": 43,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "linux": {
+    "python_series": "3.12",
+    "installation": "regular wheel in non-root Docker container, read-only test source mount",
+    "junit": {
+      "tests": 43,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "redis": {
+    "version": "7.4.11",
+    "persistence_and_memory": {
+      "appendfsync": "always",
+      "maxmemory": "134217728",
+      "maxmemory-policy": "noeviction",
+      "appendonly": "yes"
+    }
+  },
+  "http_demo": {
+    "verified_demo": true,
+    "scenario_count": 9,
+    "results": [
+      {
+        "scenario": "text",
+        "passed": true,
+        "response": {
+          "request_id": "b56e857b5c39a7950deb2dbf17454d285ae30b19c94a7c8589631110bdd3cf66",
+          "state": "SUCCEEDED",
+          "model": "alpha-text",
+          "provider": "alpha",
+          "output": {
+            "text": "fixture answer"
+          },
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 4
+          },
+          "accounted_nusd": 10000,
+          "attempts": [
+            {
+              "model": "alpha-text",
+              "provider": "alpha",
+              "error": null,
+              "latency_ms": 11.845767992781475,
+              "usage": {
+                "input_tokens": 2,
+                "output_tokens": 4
+              },
+              "accounted_nusd": 10000,
+              "accounting": "reported_usage"
+            }
+          ]
+        }
+      },
+      {
+        "scenario": "structured",
+        "passed": true,
+        "response": {
+          "request_id": "285f0cdb7f37888a695b42b36b9ad44736a29f45f94b22d814713a4e3891dcf0",
+          "state": "SUCCEEDED",
+          "model": "alpha-pro",
+          "provider": "alpha",
+          "output": {
+            "object": {
+              "answer": "fixture answer",
+              "verified": true
+            }
+          },
+          "usage": {
+            "input_tokens": 1,
+            "output_tokens": 4
+          },
+          "accounted_nusd": 9000,
+          "attempts": [
+            {
+              "model": "alpha-pro",
+              "provider": "alpha",
+              "error": null,
+              "latency_ms": 4.976102005457506,
+              "usage": {
+                "input_tokens": 1,
+                "output_tokens": 4
+              },
+              "accounted_nusd": 9000,
+              "accounting": "reported_usage"
+            }
+          ]
+        }
+      },
+      {
+        "scenario": "tools",
+        "passed": true,
+        "response": {
+          "request_id": "1f49fa9607ea5d4f3f8e817a29a8f4b609a86b1afd28275252c91aa58b745c04",
+          "state": "SUCCEEDED",
+          "model": "alpha-pro",
+          "provider": "alpha",
+          "output": {
+            "tool_calls": [
+              {
+                "name": "lookup_stock",
+                "arguments": {
+                  "sku": "demo-kit"
+                }
+              }
+            ]
+          },
+          "usage": {
+            "input_tokens": 1,
+            "output_tokens": 4
+          },
+          "accounted_nusd": 9000,
+          "attempts": [
+            {
+              "model": "alpha-pro",
+              "provider": "alpha",
+              "error": null,
+              "latency_ms": 5.704288007109426,
+              "usage": {
+                "input_tokens": 1,
+                "output_tokens": 4
+              },
+              "accounted_nusd": 9000,
+              "accounting": "reported_usage"
+            }
+          ]
+        }
+      },
+      {
+        "scenario": "fallback",
+        "passed": true,
+        "response": {
+          "request_id": "8a8bc3dc0845595df410582e295b92940f9f42659c380e7a299ccb7edfca2a03",
+          "state": "SUCCEEDED",
+          "model": "beta-text",
+          "provider": "beta",
+          "output": {
+            "text": "fixture answer"
+          },
+          "usage": {
+            "input_tokens": 1,
+            "output_tokens": 4
+          },
+          "accounted_nusd": 11500,
+          "attempts": [
+            {
+              "model": "alpha-rate",
+              "provider": "alpha",
+              "error": "rate_limited",
+              "latency_ms": 4.127819003770128,
+              "usage": null,
+              "accounted_nusd": 0,
+              "accounting": "explicit_rejection"
+            },
+            {
+              "model": "beta-text",
+              "provider": "beta",
+              "error": null,
+              "latency_ms": 9.215519996359944,
+              "usage": {
+                "input_tokens": 1,
+                "output_tokens": 4
+              },
+              "accounted_nusd": 11500,
+              "accounting": "reported_usage"
+            }
+          ]
+        }
+      },
+      {
+        "scenario": "timeout",
+        "passed": true,
+        "response": {
+          "request_id": "f889c1ca692d2eba42a42da8cb2138da761f3c0b190adb087f2d480fd328c902",
+          "state": "SUCCEEDED",
+          "model": "beta-text",
+          "provider": "beta",
+          "output": {
+            "text": "fixture answer"
+          },
+          "usage": {
+            "input_tokens": 1,
+            "output_tokens": 4
+          },
+          "accounted_nusd": 80500,
+          "attempts": [
+            {
+              "model": "alpha-timeout",
+              "provider": "alpha",
+              "error": "timeout",
+              "latency_ms": 2002.9720649908995,
+              "usage": null,
+              "accounted_nusd": 69000,
+              "accounting": "unknown_usage_reserved_maximum"
+            },
+            {
+              "model": "beta-text",
+              "provider": "beta",
+              "error": null,
+              "latency_ms": 13.4686370001873,
+              "usage": {
+                "input_tokens": 1,
+                "output_tokens": 4
+              },
+              "accounted_nusd": 11500,
+              "accounting": "reported_usage"
+            }
+          ]
+        }
+      },
+      {
+        "scenario": "unsupported",
+        "passed": true,
+        "response": {
+          "error": "requested capability is unsupported by a selected model"
+        }
+      },
+      {
+        "scenario": "budget",
+        "passed": true,
+        "response": {
+          "request_id": "4ddcacb0502f4d51f6eb4b27a6d90fe614075c2175f5e7350138be2452cb0100",
+          "state": "REJECTED",
+          "error": "cost budget cannot cover this attempt",
+          "accounted_nusd": 0,
+          "attempts": []
+        }
+      },
+      {
+        "scenario": "stream",
+        "passed": true,
+        "first_delta_seconds": 0.059275400009937584,
+        "duration_seconds": 0.0929073000443168,
+        "events": "event: delta\ndata: {\"request_id\": \"7b6aec8d467306d0e694a17ab480049f95b5d076008c89911e9dd627d76f58f0\", \"text\": \"fixture \"}\n\nevent: delta\ndata: {\"request_id\": \"7b6aec8d467306d0e694a17ab480049f95b5d076008c89911e9dd627d76f58f0\", \"text\": \"answer\"}\n\nevent: done\ndata: {\"request_id\": \"7b6aec8d467306d0e694a17ab480049f95b5d076008c89911e9dd627d76f58f0\", \"state\": \"SUCCEEDED\", \"model\": \"beta-text\", \"provider\": \"beta\", \"usage\": {\"input_tokens\": 1, \"output_tokens\": 4}, \"accounted_nusd\": 11500, \"attempts\": [{\"model\": \"beta-text\", \"provider\": \"beta\", \"error\": null, \"latency_ms\": 56.2622009892948, \"usage\": {\"input_tokens\": 1, \"output_tokens\": 4}, \"accounted_nusd\": 11500, \"accounting\": \"reported_usage\"}]}\n"
+      },
+      {
+        "scenario": "partial-stream",
+        "passed": true,
+        "first_delta_seconds": 0.019463199947495013,
+        "duration_seconds": 0.05184299999382347,
+        "events": "event: delta\ndata: {\"request_id\": \"4daeccf43ae0528206ee99eec9bae7cf34b078713094b6fc45ed630de448f64b\", \"text\": \"fixture \"}\n\nevent: delta\ndata: {\"request_id\": \"4daeccf43ae0528206ee99eec9bae7cf34b078713094b6fc45ed630de448f64b\", \"text\": \"answer\"}\n\nevent: error\ndata: {\"request_id\": \"4daeccf43ae0528206ee99eec9bae7cf34b078713094b6fc45ed630de448f64b\", \"state\": \"UNVERIFIED\", \"model\": \"beta-stream-cut\", \"provider\": \"beta\", \"usage\": null, \"accounted_nusd\": 87500, \"attempts\": [{\"model\": \"beta-stream-cut\", \"provider\": \"beta\", \"error\": \"invalid_response\", \"latency_ms\": 25.620599000831135, \"usage\": null, \"accounted_nusd\": 87500, \"accounting\": \"unknown_usage_reserved_maximum\"}]}\n"
+      }
+    ],
+    "usage_snapshot": {
+      "accounted_nusd": 677000,
+      "pending_reserved_nusd": 0,
+      "input_tokens": 25,
+      "output_tokens": 80,
+      "attempts": 29,
+      "unknown_usage_attempts": 6
+    },
+    "network": "actual loopback HTTP gateway and two mock provider protocols",
+    "paid_api_calls": 0
+  },
+  "restart": {
+    "gateway_restarted": true,
+    "cached_response_preserved": true,
+    "usage_unchanged_on_replay": true,
+    "redis_persisted_identity": true
+  },
+  "checks": {
+    "ruff": "passed",
+    "ruff_format": "passed",
+    "pip_check": "passed",
+    "docker_build": "passed",
+    "limited_credential_pattern_scan": "passed; source/config token/private-key patterns only",
+    "remote_ci": "not run; publication requires authorization"
+  },
+  "source_hash_basis": "UTF-8 text with LF newlines",
+  "source_sha256": {
+    "src/model_gateway/adapters.py": "ada0a32d46baffc805d755c1d616b56223a4f3f4f403d5a18d2950fd3f4227a5",
+    "src/model_gateway/app.py": "644b0e7a694bd148f4b0fe46387ca8d9bb8637db9fc79b275a9076f1f8cc5aa7",
+    "src/model_gateway/boundary.py": "c4b322868907bc792baecd2a52a85d8504e9c2fb3def58e0c302309f2ee68b15",
+    "src/model_gateway/contracts.py": "e14db228ee30ad17ece504c78f5d2edbed5c66a627344ecd350d6161f9d970b6",
+    "src/model_gateway/fixtures.py": "d0b07b4b4c935eeb814ee4b4622cff0077cbb636f55adb5abac8f520c482970d",
+    "src/model_gateway/ledger.py": "2cbe195586d5be4f1e14aa26d08358fc8daafe29d3a3cd13938580527cbbf8ab",
+    "src/model_gateway/service.py": "e9941018b9cf7912d59fe789b05ce703728f8ea34df1bc311fea140a3c1786dd",
+    "src/model_gateway/__init__.py": "c0ba5670d2dc33de9908967466083b67b424a1796646365e4fe44c18c16c4451",
+    "tests/test_gateway.py": "3e3b9f7f751d836015d7730add0efa18c4a3c8241c1674a829820e6e0202cf46",
+    "scripts/demo.py": "c8c3b75a3611410cb40b7b2f1f1935c62aac3a7f3ad92aa1340e4ca252dfca27",
+    "scripts/verify_restart.py": "66619ada74f1f6def094bbcf0e387c55da90e857cfb5754aeb486866c8a16d58",
+    "pyproject.toml": "da70a6527276b832441291f76bacded0661e8b57c217f7a4b4d56c17410f6f69",
+    "requirements.lock": "14690a10a4af29865af261051c937a5375071b9b7b712e33e011213ac8087e2f",
+    "Dockerfile": "245e192053f3074ff08ec0cd33766bfd59164f69cb6665d2c9509e3617b7f5f5",
+    "docker-compose.yml": "127374fbcc9c6a427050789f35e4826661a6bce9ace72ce4c47c8f30df1b03e3",
+    ".github/workflows/ci.yml": "d5f1bf07ca4b0303470144590b39df95d1d1188ffc3323ab3dc2f014e3039e4f"
+  },
+  "limitations": [
+    "Local mock-provider protocols only; no paid endpoint or live vendor integration",
+    "Hypothetical fixture prices and reported fixture tokens are not provider billing attestations",
+    "Single configured API client and standalone Redis, no HA/storage-loss guarantee",
+    "Partial streams and ambiguous cancellation can remain pending with conservative reserved cost"
+  ]
+}

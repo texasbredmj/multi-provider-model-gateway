@@ -1,0 +1,48 @@
+name: model-gateway
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  policy:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.11', '3.12', '3.14']
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install -r requirements.lock .
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: python -m pytest -q -m 'not integration'
+  redis-and-http:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GATEWAY_INTEGRATION: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.lock .
+      - name: Generate local fixture configuration
+        run: python -c "import secrets; from pathlib import Path; Path('.env').write_text('GATEWAY_API_KEY='+secrets.token_hex(24)+'\n'); Path('.gateway').mkdir(exist_ok=True)"
+      - run: docker compose up -d --build
+      - run: python scripts/demo.py
+      - run: python scripts/verify_restart.py
+      - run: python -m pytest -q --junitxml=.gateway/tests.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gateway-evidence
+          path: .gateway/
+          include-hidden-files: true
+          retention-days: 14
+      - run: docker compose down
+        if: always()
