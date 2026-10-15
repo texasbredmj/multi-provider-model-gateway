@@ -1,5 +1,14 @@
 # Multi-Provider Model Gateway
 
+## Start Here
+
+[Launch the complete employer demonstration on GitHub](https://github.com/texasbredmj/ai-engineering-portfolio#start-here).
+
+The public portfolio contains this project's runnable employer source, sample fixtures and verified demonstration, plus one Codespaces launch for all eight projects. No separate private-repository access is required. Run `python scripts/project_demo.py 6` from the portfolio Codespace to demonstrate this project.
+
+The instructions below describe this repository's standalone version. The integrated platform and its current verification evidence are maintained in the portfolio.
+
+
 Project 06 of AI Systems Engineering Lab provides authenticated, capability-aware model routing,
 normalized responses, streaming, and Redis-backed usage budgets. Two local mock provider APIs use
 different request/response formats. They exercise the gateway without a paid model endpoint or an
